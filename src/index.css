@@ -1,0 +1,6 @@
+@import './reset.css';
+
+html,
+body {
+  font-family: 'Nanum Gothic', sans-serif;
+}

@@ -1,0 +1,85 @@
+.main-form {
+  position: relative;
+  width: 500px;
+  height: 200px;
+  padding: 20px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 2px;
+  display: inline-block;
+  margin: 1rem;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.card:hover {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.main-title {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+.side-button {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  color: black;
+  border-radius: 50%;
+  background-color: #ccc;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: default;
+  font-size: 14px;
+  user-select: none;
+}
+
+.button-prev {
+  line-height: 20px;
+  left: 10px;
+  text-align: center;
+}
+
+.button-next {
+  line-height: 20px;
+  right: 10px;
+  text-align: center;
+}
+
+.button-prev:hover,
+.button-next:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.submit {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  width: 80px;
+  height: 30px;
+  transform: translateX(-50%);
+  color: white;
+  background: #4c8ffb;
+  border: 1px #3079ed solid;
+  box-shadow: inset 0 1px 0 #80b0fb;
+}
+
+.submit:hover {
+  border: 1px #2f5bb7 solid;
+  box-shadow: 0 1px 1px #eaeaea, inset 0 1px 0 #5a94f1;
+  background: #3f83f1;
+}
+
+.submit:active {
+  box-shadow: inset 0 2px 5px #2370fe;
+}
