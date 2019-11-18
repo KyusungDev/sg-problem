@@ -71,6 +71,7 @@ const MainForm = ({ data }) => {
     };
 
     console.log(output);
+    console.log('output.json', JSON.stringify(output));
   };
 
   const validate = () => (answers[step] ? answers[step].validation : false);
