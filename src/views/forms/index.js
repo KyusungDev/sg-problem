@@ -1,6 +1,6 @@
 import CheckboxForm from './CheckboxForm';
 import RadioForm from './RadioForm';
 import InputForm from './InputForm';
-import SelectboxForm from './SelectboxForm';
+import SelectForm from './SelectForm';
 
-export { CheckboxForm, RadioForm, InputForm, SelectboxForm };
+export { CheckboxForm, RadioForm, InputForm, SelectForm };

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './../index.css';
 
-const SelectboxForm = props => {
+const SelectForm = props => {
   const [select, setSelect] = useState('');
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const SelectboxForm = props => {
   return (
     <div>
       <div className="form-title">{props.title}</div>
-      <div className="selectbox-form">
+      <div className="select-form">
         <form>
           <div>
             <select
@@ -41,7 +41,7 @@ const SelectboxForm = props => {
   );
 };
 
-SelectboxForm.propTypes = {
+SelectForm.propTypes = {
   itemId: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   formType: PropTypes.number.isRequired,
@@ -50,10 +50,10 @@ SelectboxForm.propTypes = {
   onChange: PropTypes.func
 };
 
-SelectboxForm.defaultProps = {
+SelectForm.defaultProps = {
   options: [],
   previousData: [],
   onChange: () => {}
 };
 
-export default SelectboxForm;
+export default SelectForm;

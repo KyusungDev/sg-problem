@@ -3,18 +3,7 @@ import PropTypes from 'prop-types';
 import './index.css';
 
 const Line = () => {
-  return (
-    <span
-      style={{
-        width: '20px',
-        height: '6px',
-        borderTop: '1px dashed #868e96',
-        display: 'inline-block',
-        marginLeft: '5px',
-        marginRight: '5px'
-      }}
-    ></span>
-  );
+  return <span className="line"></span>;
 };
 
 const Circle = props => {

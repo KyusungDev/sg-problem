@@ -1,33 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { CheckboxForm, RadioForm, InputForm, SelectboxForm } from './../forms';
+import { CheckboxForm, RadioForm, InputForm, SelectForm } from './../forms';
 import Stepper from './../../components/Stepper';
-import { MAX_PAGE_LEN, MSG_REQUIRED } from './../../constants';
+import { MSG_REQUIRED } from './../../constants';
 import './index.css';
 
-const formSwitcher = (type, props, onChange) =>
+const formSwitcher = (key, type, props, onChange) =>
   ({
-    1: <CheckboxForm {...props} onChange={onChange}></CheckboxForm>,
-    2: <RadioForm {...props} onChange={onChange}></RadioForm>,
-    3: <InputForm {...props} onChange={onChange}></InputForm>,
-    4: <SelectboxForm {...props} onChange={onChange}></SelectboxForm>
+    1: <CheckboxForm key={key} {...props} onChange={onChange}></CheckboxForm>,
+    2: <RadioForm key={key} {...props} onChange={onChange}></RadioForm>,
+    3: <InputForm key={key} {...props} onChange={onChange}></InputForm>,
+    4: <SelectForm key={key} {...props} onChange={onChange}></SelectForm>
   }[type]);
 
 const MainForm = ({ data }) => {
-  const [title, setTitle] = useState('');
+  const [doc, setDoc] = useState({
+    id: '',
+    title: '',
+    forms: [],
+    formCount: 0
+  });
   const [step, setStep] = useState(1);
   const [answers, setAnswers] = useState({});
 
   useEffect(() => {
-    setTitle(data.title);
+    setDoc({
+      id: data.formId,
+      title: data.title,
+      forms: data.items,
+      formCount: data.items.length
+    });
   }, [data]);
 
-  const handleChange = (step, id, data, formValidation) => {
+  const handleChange = (step, id, state, formValidation) => {
     setAnswers({
       ...answers,
       [step]: {
         id,
-        data,
+        state,
         validation: formValidation
       }
     });
@@ -36,7 +46,7 @@ const MainForm = ({ data }) => {
   const handleBackClick = () => setStep(Math.max(step - 1, 1));
   const handleNextClick = () => {
     if (validate()) {
-      setStep(Math.min(step + 1, MAX_PAGE_LEN));
+      setStep(Math.min(step + 1, doc.formCount));
     } else {
       alert(MSG_REQUIRED);
     }
@@ -49,14 +59,14 @@ const MainForm = ({ data }) => {
 
     const items = [...Object.keys(answers)].map(key => ({
       id: key,
-      data: answers[key].data
+      state: answers[key].state
     }));
 
     const output = {
-      id: data.formId,
+      id: doc.id,
       items: items.map(item => ({
         id: item.id,
-        text: item.data.map(item => item.text).join(',')
+        answer: item.state.map(item => item.text).join(',')
       }))
     };
 
@@ -67,20 +77,19 @@ const MainForm = ({ data }) => {
 
   return (
     <div className="main-form card">
-      <div className="main-title">{title}</div>
+      <div className="main-title">{doc.title}</div>
       <Stepper step={step}>
-        {data.items.map(item => (
-          <Stepper.Step key={item.itemId}>
-            {formSwitcher(
-              item.formType,
-              {
-                ...item,
-                previousData: answers[step] ? answers[step].data : []
-              },
-              (id, data, validation) => handleChange(step, id, data, validation)
-            )}
-          </Stepper.Step>
-        ))}
+        {doc.forms.map((item, index) =>
+          formSwitcher(
+            index,
+            item.formType,
+            {
+              ...item,
+              previousData: answers[step] ? answers[step].state : []
+            },
+            (id, state, validation) => handleChange(step, id, state, validation)
+          )
+        )}
       </Stepper>
       <div
         className="side-button button-prev"
@@ -92,13 +101,13 @@ const MainForm = ({ data }) => {
       <div
         className="side-button button-next"
         onClick={handleNextClick}
-        disabled={step === MAX_PAGE_LEN}
+        disabled={step === doc.formCount}
       >
         {'>'}
       </div>
       <button
         onClick={handleSubmit}
-        className={`submit ${step === MAX_PAGE_LEN ? '' : 'hidden'}`}
+        className={`submit ${step === doc.formCount ? '' : 'hidden'}`}
       >
         보내기
       </button>

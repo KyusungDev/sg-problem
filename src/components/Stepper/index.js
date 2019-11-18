@@ -5,11 +5,12 @@ import Step from './Step';
 import './index.css';
 
 const Stepper = props => {
-  const size = props.children.length;
+  // const size = props.children ? props.children.length : 0;
+  const children = props.children || [];
   return (
     <div className="stepper">
-      <Header size={size} step={props.step}></Header>
-      {props.children.map((item, i) => (
+      <Header size={children.length} step={props.step}></Header>
+      {children.map((item, i) => (
         <Step key={i} visible={props.step === i + 1}>
           {item}
         </Step>
@@ -20,6 +21,10 @@ const Stepper = props => {
 
 Stepper.propTypes = {
   step: PropTypes.number
+};
+
+Stepper.defaultProps = {
+  step: 1
 };
 
 Stepper.Step = Step;

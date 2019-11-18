@@ -4,3 +4,12 @@
   border-radius: 50%;
   display: inline-block;
 }
+
+.line {
+  width: 20px;
+  height: 6px;
+  border-top: 1px dashed #868e96;
+  display: inline-block;
+  margin-left: 5px;
+  margin-right: 5px;
+}

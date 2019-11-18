@@ -19,11 +19,6 @@ const CheckboxForm = props => {
     }
 
     const validation = checklist.some(item => item.checked);
-    // const result = checklist
-    //   .filter(item => item.checked)
-    //   .map(item => props.options.find(o => o.id === item.id).text)
-    //   .join();
-
     props.onChange(props.itemId, [...checklist], validation);
   };
 
