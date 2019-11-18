@@ -6,25 +6,25 @@ const CheckboxForm = props => {
   const [checklist, setChecklist] = useState([]);
 
   useEffect(() => {
-    const previousData = props.previousData || [];
+    const previousData = props.previousData;
     setChecklist(previousData);
   }, [props]);
 
   const handleCheckChange = (option, checked) => {
     const optionIndex = checklist.findIndex(item => item.id === option.id);
     if (optionIndex !== -1) {
-      checklist[optionIndex] = { id: option.id, checked };
+      checklist[optionIndex] = { id: option.id, text: option.text, checked };
     } else {
-      checklist.push({ id: option.id, checked });
+      checklist.push({ id: option.id, text: option.text, checked });
     }
 
     const validation = checklist.some(item => item.checked);
-    const result = checklist
-      .filter(item => item.checked)
-      .map(item => props.options.find(o => o.id === item.id).text)
-      .join();
+    // const result = checklist
+    //   .filter(item => item.checked)
+    //   .map(item => props.options.find(o => o.id === item.id).text)
+    //   .join();
 
-    props.onChange(props.itemId, [...checklist], result, validation);
+    props.onChange(props.itemId, [...checklist], validation);
   };
 
   const isChecked = id => {

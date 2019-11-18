@@ -16,15 +16,21 @@ const formSwitcher = (type, props, onChange) =>
 const MainForm = ({ data }) => {
   const [title, setTitle] = useState('');
   const [step, setStep] = useState(1);
-  const [validation, setValidation] = useState([]);
   const [answers, setAnswers] = useState({});
 
   useEffect(() => {
     setTitle(data.title);
   }, [data]);
 
-  const validate = () => {
-    return validation[step];
+  const handleChange = (step, id, data, formValidation) => {
+    setAnswers({
+      ...answers,
+      [step]: {
+        id,
+        data,
+        validation: formValidation
+      }
+    });
   };
 
   const handleBackClick = () => setStep(Math.max(step - 1, 1));
@@ -36,21 +42,6 @@ const MainForm = ({ data }) => {
     }
   };
 
-  const handleChange = (step, id, data, result, formValidation) => {
-    setAnswers({
-      ...answers,
-      [id]: {
-        data,
-        answer: result
-      }
-    });
-
-    setValidation({
-      ...validation,
-      [step]: formValidation
-    });
-  };
-
   const handleSubmit = () => {
     if (!validate()) {
       alert(MSG_REQUIRED);
@@ -58,16 +49,21 @@ const MainForm = ({ data }) => {
 
     const items = [...Object.keys(answers)].map(key => ({
       id: key,
-      answer: answers[key].answer
+      data: answers[key].data
     }));
 
     const output = {
       id: data.formId,
-      items: items
+      items: items.map(item => ({
+        id: item.id,
+        text: item.data.map(item => item.text).join(',')
+      }))
     };
 
     console.log(output);
   };
+
+  const validate = () => (answers[step] ? answers[step].validation : false);
 
   return (
     <div className="main-form card">
@@ -79,12 +75,9 @@ const MainForm = ({ data }) => {
               item.formType,
               {
                 ...item,
-                previousData: answers[item.itemId]
-                  ? answers[item.itemId].data
-                  : undefined
+                previousData: answers[step] ? answers[step].data : []
               },
-              (id, data, result, validation) =>
-                handleChange(step, id, data, result, validation)
+              (id, data, validation) => handleChange(step, id, data, validation)
             )}
           </Stepper.Step>
         ))}

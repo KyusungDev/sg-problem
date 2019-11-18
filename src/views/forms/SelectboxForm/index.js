@@ -6,13 +6,15 @@ const SelectboxForm = props => {
   const [select, setSelect] = useState('');
 
   useEffect(() => {
-    const previousData = props.previousData || '';
-    setSelect(previousData);
+    const previousData = props.previousData;
+    if (previousData.length !== 0) {
+      setSelect(previousData[0].id);
+    }
   }, [props]);
 
   const handleOptionChange = id => {
     const option = props.options.find(o => o.id === parseInt(id)) || {};
-    props.onChange(props.itemId, option.id, option.text, true);
+    props.onChange(props.itemId, [{ id: option.id, text: option.text }], true);
   };
 
   return (
@@ -44,13 +46,13 @@ SelectboxForm.propTypes = {
   title: PropTypes.string.isRequired,
   formType: PropTypes.number.isRequired,
   options: PropTypes.array,
-  previousData: PropTypes.any,
+  previousData: PropTypes.array,
   onChange: PropTypes.func
 };
 
 SelectboxForm.defaultProps = {
   options: [],
-  previousData: '',
+  previousData: [],
   onChange: () => {}
 };
 

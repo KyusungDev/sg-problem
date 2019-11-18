@@ -6,13 +6,14 @@ const InputForm = props => {
   const [input, setInput] = useState('');
 
   useEffect(() => {
-    const previousData = props.previousData || '';
-    setInput(previousData);
+    const previousData = props.previousData;
+    if (previousData.length !== 0) {
+      setInput(previousData[0].text);
+    }
   }, [props]);
 
   const handleInputChange = value => {
-    setInput(value);
-    props.onChange(props.itemId, value, value, value !== '');
+    props.onChange(props.itemId, [{ text: value }], value !== '');
   };
 
   return (
@@ -38,13 +39,13 @@ InputForm.propTypes = {
   title: PropTypes.string.isRequired,
   formType: PropTypes.number.isRequired,
   options: PropTypes.array,
-  previousData: PropTypes.any,
+  previousData: PropTypes.array,
   onChange: PropTypes.func
 };
 
 InputForm.defaultProps = {
   options: [],
-  previousData: '',
+  previousData: [],
   onChange: () => {}
 };
 
