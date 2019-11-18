@@ -16,3 +16,6 @@ In the project directory, you can run:
 ### `yarn build`
 
 프로덕션용 앱을`build` 폴더에 빌드합니다. <br />
+
+### Github
+[https://github.com/KyusungDev/sg-problem](https://github.com/KyusungDev/sg-problem)
